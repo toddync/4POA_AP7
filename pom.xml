@@ -6,21 +6,21 @@
   <packaging>war</packaging>
   <dependencies>
       <dependency>
-          <groupId>jakarta.servlet</groupId>
-          <artifactId>jakarta.servlet-api</artifactId>
-          <version>6.0.0</version>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>4.0.1</version>
           <scope>provided</scope>
       </dependency>
       <dependency>
-    	<groupId>com.fasterxml.jackson.core</groupId>
-    	<artifactId>jackson-databind</artifactId>
-    	<version>2.17.1</version>
-	</dependency>
-	<dependency>
-    	<groupId>org.mariadb.jdbc</groupId>
-		<artifactId>mariadb-java-client</artifactId>
-    	<version>3.5.5</version>
-	</dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>8.0.33</version>
+      </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -28,7 +28,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <release>21</release>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <plugin>
