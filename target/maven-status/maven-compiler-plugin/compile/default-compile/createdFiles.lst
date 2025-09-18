@@ -1,0 +1,11 @@
+com\smartcity\controller\HomeServlet.class
+com\smartcity\service\AIService.class
+com\smartcity\webservice\AnaliseSimulacroResource.class
+com\smartcity\webservice\SetoresResource.class
+com\smartcity\model\Analise.class
+com\smartcity\webservice\AnaliseResource.class
+com\smartcity\controller\SetorServlet.class
+com\smartcity\controller\DashboardServlet.class
+com\smartcity\service\NewsService.class
+com\smartcity\controller\SobreServlet.class
+com\smartcity\controller\ContatoServlet.class

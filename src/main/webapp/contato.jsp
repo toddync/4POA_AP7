@@ -4,7 +4,7 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartCity AI - Dashboard</title>
+    <title>SmartCity AI - Contato</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -60,7 +60,7 @@
                 <button id="menu-toggle" class="text-gray-600 focus:outline-none">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 class="text-xl font-semibold">Dashboard</h1>
+                <h1 class="text-xl font-semibold">Contato</h1>
                 <nav>
                     <a href="<%= request.getContextPath() %>/dashboard" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md">Home</a>
                     <a href="<%= request.getContextPath() %>/setor" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md">Análise por Setor</a>
@@ -84,15 +84,28 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4">
                 <div class="container mx-auto">
-                    <h1 class="text-3xl font-bold mb-4">Bem-vindo ao SmartCity AI</h1>
-                    <p class="text-gray-700">Esta é a página inicial do seu aplicativo SmartCity AI. Use o menu lateral para navegar pelas diferentes seções.</p>
+                    <h1 class="text-3xl font-bold mb-4">Contato</h1>
+                    <p class="text-gray-700 mb-6">Preencha o formulário abaixo para entrar em contato conosco.</p>
 
-                    <div class="mt-6 bg-white p-6 rounded shadow">
-                        <h2 class="text-2xl font-semibold mb-2">Simulacro de Análises (teste)</h2>
-                        <p class="text-sm text-gray-600 mb-4">Clique no botão para buscar análises simuladas (News+IA).</p>
-                        <button id="btn-simulacro" class="bg-blue-600 text-white px-4 py-2 rounded">Carregar Simulacro</button>
-                        <div id="simulacro-results" class="mt-4 space-y-4"></div>
-                    </div>
+                    <form action="ContatoServlet" method="post" class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="mb-4">
+                            <label for="nome" class="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
+                            <input type="text" id="nome" name="nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="mensagem" class="block text-gray-700 text-sm font-bold mb-2">Mensagem:</label>
+                            <textarea id="mensagem" name="mensagem" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Enviar Mensagem
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </main>
         </div>
@@ -105,30 +118,6 @@
 
         document.getElementById('options-menu').addEventListener('click', function() {
             document.querySelector('[aria-labelledby="options-menu"]').classList.toggle('hidden');
-        });
-        
-        document.getElementById('btn-simulacro').addEventListener('click', function() {
-            const resultsEl = document.getElementById('simulacro-results');
-            resultsEl.innerHTML = '<div>Carregando...</div>';
-            fetch('<%= request.getContextPath() %>/analise/simulacro')
-                .then(r => {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
-                .then(data => {
-                    resultsEl.innerHTML = '';
-                    data.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'p-4 bg-gray-50 border rounded';
-                        card.innerHTML = '<h3 class="font-semibold">Setor: ' + (item.setor || '') + '</h3>' +
-                                         '<p><strong>Dados:</strong> ' + (item.dados || '') + '</p>' +
-                                         '<p><strong>Resultado:</strong> ' + (item.resultadoAnalise || '') + '</p>';
-                        resultsEl.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    resultsEl.innerHTML = '<div class="text-red-600">Erro: ' + err.message + '</div>';
-                });
         });
     </script>
 </body>

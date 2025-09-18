@@ -4,7 +4,7 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartCity AI - Dashboard</title>
+    <title>SmartCity AI - Análise por Setor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -60,10 +60,10 @@
                 <button id="menu-toggle" class="text-gray-600 focus:outline-none">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 class="text-xl font-semibold">Dashboard</h1>
+                <h1 class="text-xl font-semibold">Análise por Setor</h1>
                 <nav>
                     <a href="<%= request.getContextPath() %>/dashboard" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md">Home</a>
-                    <a href="<%= request.getContextPath() %>/setor" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md">Análise por Setor</a>
+                    <a href="<%= request.getContextPath() %>/sobre" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md">Sobre</a>
                     <div class="relative inline-block text-left">
                         <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="options-menu" aria-haspopup="true" aria-expanded="true">
                             Dropdown
@@ -84,14 +84,35 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4">
                 <div class="container mx-auto">
-                    <h1 class="text-3xl font-bold mb-4">Bem-vindo ao SmartCity AI</h1>
-                    <p class="text-gray-700">Esta é a página inicial do seu aplicativo SmartCity AI. Use o menu lateral para navegar pelas diferentes seções.</p>
+                    <h1 class="text-3xl font-bold mb-4">Análise por Setor</h1>
+                    <p class="text-gray-700 mb-6">Selecione um setor para visualizar as análises detalhadas.</p>
 
-                    <div class="mt-6 bg-white p-6 rounded shadow">
-                        <h2 class="text-2xl font-semibold mb-2">Simulacro de Análises (teste)</h2>
-                        <p class="text-sm text-gray-600 mb-4">Clique no botão para buscar análises simuladas (News+IA).</p>
-                        <button id="btn-simulacro" class="bg-blue-600 text-white px-4 py-2 rounded">Carregar Simulacro</button>
-                        <div id="simulacro-results" class="mt-4 space-y-4"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">Saúde</h2>
+                            <p class="text-gray-700">Análises de dados de saúde pública, hospitais e clínicas.</p>
+                            <a href="#" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Detalhes</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">Educação</h2>
+                            <p class="text-gray-700">Análises de desempenho escolar, infraestrutura e programas educacionais.</p>
+                            <a href="#" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Detalhes</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">Transporte</h2>
+                            <p class="text-gray-700">Análises de fluxo de tráfego, transporte público e infraestrutura viária.</p>
+                            <a href="#" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Detalhes</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">Segurança</h2>
+                            <p class="text-gray-700">Análises de índices de criminalidade, policiamento e segurança urbana.</p>
+                            <a href="#" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Detalhes</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">Meio Ambiente</h2>
+                            <p class="text-gray-700">Análises de qualidade do ar, gestão de resíduos e áreas verdes.</p>
+                            <a href="#" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Detalhes</a>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -105,30 +126,6 @@
 
         document.getElementById('options-menu').addEventListener('click', function() {
             document.querySelector('[aria-labelledby="options-menu"]').classList.toggle('hidden');
-        });
-        
-        document.getElementById('btn-simulacro').addEventListener('click', function() {
-            const resultsEl = document.getElementById('simulacro-results');
-            resultsEl.innerHTML = '<div>Carregando...</div>';
-            fetch('<%= request.getContextPath() %>/analise/simulacro')
-                .then(r => {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
-                .then(data => {
-                    resultsEl.innerHTML = '';
-                    data.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'p-4 bg-gray-50 border rounded';
-                        card.innerHTML = '<h3 class="font-semibold">Setor: ' + (item.setor || '') + '</h3>' +
-                                         '<p><strong>Dados:</strong> ' + (item.dados || '') + '</p>' +
-                                         '<p><strong>Resultado:</strong> ' + (item.resultadoAnalise || '') + '</p>';
-                        resultsEl.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    resultsEl.innerHTML = '<div class="text-red-600">Erro: ' + err.message + '</div>';
-                });
         });
     </script>
 </body>

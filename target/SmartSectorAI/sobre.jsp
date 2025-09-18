@@ -4,7 +4,7 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartCity AI - Dashboard</title>
+    <title>SmartCity AI - Sobre</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -86,13 +86,6 @@
                 <div class="container mx-auto">
                     <h1 class="text-3xl font-bold mb-4">Bem-vindo ao SmartCity AI</h1>
                     <p class="text-gray-700">Esta é a página inicial do seu aplicativo SmartCity AI. Use o menu lateral para navegar pelas diferentes seções.</p>
-
-                    <div class="mt-6 bg-white p-6 rounded shadow">
-                        <h2 class="text-2xl font-semibold mb-2">Simulacro de Análises (teste)</h2>
-                        <p class="text-sm text-gray-600 mb-4">Clique no botão para buscar análises simuladas (News+IA).</p>
-                        <button id="btn-simulacro" class="bg-blue-600 text-white px-4 py-2 rounded">Carregar Simulacro</button>
-                        <div id="simulacro-results" class="mt-4 space-y-4"></div>
-                    </div>
                 </div>
             </main>
         </div>
@@ -105,30 +98,6 @@
 
         document.getElementById('options-menu').addEventListener('click', function() {
             document.querySelector('[aria-labelledby="options-menu"]').classList.toggle('hidden');
-        });
-        
-        document.getElementById('btn-simulacro').addEventListener('click', function() {
-            const resultsEl = document.getElementById('simulacro-results');
-            resultsEl.innerHTML = '<div>Carregando...</div>';
-            fetch('<%= request.getContextPath() %>/analise/simulacro')
-                .then(r => {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
-                .then(data => {
-                    resultsEl.innerHTML = '';
-                    data.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'p-4 bg-gray-50 border rounded';
-                        card.innerHTML = '<h3 class="font-semibold">Setor: ' + (item.setor || '') + '</h3>' +
-                                         '<p><strong>Dados:</strong> ' + (item.dados || '') + '</p>' +
-                                         '<p><strong>Resultado:</strong> ' + (item.resultadoAnalise || '') + '</p>';
-                        resultsEl.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    resultsEl.innerHTML = '<div class="text-red-600">Erro: ' + err.message + '</div>';
-                });
         });
     </script>
 </body>
